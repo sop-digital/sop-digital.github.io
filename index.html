@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT SOP Portal - Support Mandiri</title>
+    <title>ASTI | Asisten Tenaga IT</title>
     <!-- Tailwind CSS for Styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- jQuery for Logic -->
@@ -13,44 +13,59 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="flex min-h-screen">
+<body>
 
-    <!-- SIDEBAR -->
-    <aside class="w-[260px] bg-[#0B0E14] p-6 flex flex-col fixed h-full z-50 md:flex hidden">
-        <div class="flex items-center gap-3 mb-10 px-2">
-            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <i data-lucide="monitor" class="text-white w-5 h-5"></i>
-            </div>
-            <span class="text-white font-bold tracking-tight uppercase">IT Support</span>
-        </div>
+    <!-- Overlay untuk Mobile -->
+    <!-- <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 md:hidden" onclick="toggleSidebar()"></div> -->
 
-        <nav class="flex-1 space-y-2">
-            <button id="nav-home" class="sidebar-item active w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all">
-                <i data-lucide="home" class="w-4 h-4"></i>
-                <span class="text-sm font-medium">Beranda</span>
-            </button>
-            <button id="nav-sop" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all">
-                <i data-lucide="book-open" class="w-4 h-4"></i>
-                <span class="text-sm font-medium">Panduan SOP</span>
-            </button>
-            <button id="nav-help" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all">
-                <i data-lucide="message-square" class="w-4 h-4"></i>
-                <span class="text-sm font-medium">Bantuan IT</span>
-            </button>
-        </nav>
-
-        <div class="mt-auto bg-white/5 p-4 rounded-xl">
-            <div class="flex items-center gap-3 mb-2">
-                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-500 to-cyan-400"></div>
-                <div>
-                    <p class="text-xs text-white font-medium">User Pelaksana</p>
-                    <p class="text-[10px] text-gray-500">Tenaga Kesehatan</p>
+    <div class="flex min-h-screen  overflow-x-hidden">
+        
+    <!-- Sidebar -->
+        <aside id="sidebar" class="fixed md:relative z-30 w-72 h-full min-h-screen bg-[#0f172a] text-white flex flex-col p-6 -translate-x-full md:translate-x-0">
+            <!-- Logo & Title -->
+            <div class="flex items-center gap-3 mb-10">
+                <div class="bg-blue-600 p-2 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
                 </div>
+                <span class="text-xl font-bold tracking-tight">Tanya IT</span>
             </div>
-            <p class="text-[10px] text-gray-400 leading-relaxed">Referensi mandiri Windows 11 untuk percepatan layanan.</p>
-        </div>
-    </aside>
-    <!-- END SIDEBAR -->
+
+            <!-- Menu Navigation -->
+            <nav class="space-y-2 flex-grow">
+                <a href="#" class="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-xl text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    <span>Beranda</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800 rounded-xl transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                    <span>Panduan SOP</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-gray-800 rounded-xl transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                    </svg>
+                    <span>Buat Tiket Laporan</span>
+                </a>
+            </nav>
+
+            <!-- User Info Card -->
+            <div class="mt-auto p-4 bg-gray-900 rounded-2xl border border-gray-800">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="h-10 w-10 bg-yellow-400 rounded-full flex-shrink-0"></div>
+                    <div>
+                        <p class="text-sm font-semibold">Call 147</p>
+                        <p class="text-xs text-gray-500">Layanan Lapor IT</p>
+                    </div>
+                </div>
+                <p class="text-[10px] text-gray-400 mt-2">Layanan tersedia pada jam kerja <span class="font-bold">07.30 - 16.00</span></p>
+            </div>
+        </aside>
 
     <!-- BOTTOM NAVIGATION -->
     <nav class="fixed bottom-0 left-0 right-0 bg-white border-t flex justify-around items-center h-16 px-6 xl:hidden md:hidden">
@@ -64,17 +79,25 @@
         </button>
         <button id="nav-help-bottom" class="bottom-item flex flex-col items-center text-gray-400 xl:hidden md:hidden">
             <i data-lucide="message-square" class="w-4 h-4"></i>
-            <span class="text-[10px]">Bantuan</span>
+            <span class="text-[10px]">Buat E-Tiket</span>
         </button>
     </nav>
     <!-- END BOTTOM NAVIGATION -->
 
     <!-- MAIN CONTENT -->
-    <main class="flex-1 xl:ml-[260px] md:ml-[260px] ml-[0px] p-8 mb-16">
-        <div class="xl:max-w-7xl max-w-full mx-auto">
+    <main class="flex-grow p-8 md:p-8 w-full">
+        <div class="max-w-screen max-h-screen mx-auto">
+            
             
             <!-- HEADER -->
             <header class="flex justify-between items-center mb-10">
+                <!-- Tombol Toggle Sidebar -->
+                <button id="toggleBtn" onclick="toggleSidebar()" class="p-2 bg-white border border-gray-200 rounded-lg hidden hover:bg-gray-50 focus:outline-none shadow-sm md:block">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+
                 <div>
                     <h1 id="view-title" class="text-2xl font-bold text-[#1A1D21]">Halo, Apa Masalahnya?</h1>
                     <p class="text-sm text-gray-500">Pusat Bantuan IT Mandiri</p>
@@ -187,6 +210,7 @@
     </main>
     <!-- END MAIN CONTENT -->
 
+    </div>
     <script src="scripts.js"></script>
 </body>
 </html>

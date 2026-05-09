@@ -165,7 +165,7 @@
                 if ($('#view-home').is(':visible')) renderIssues();
             });
 
-            $('#back-to-home, #nav-home, #finish-home').on('click', () => showView('home'));
+            $('#back-to-home, #nav-home, #finish-home,#nav-home-bottom').on('click', () => showView('home'));
 
             $('#next-step').on('click', () => {
                 const steps = SOP_DATA[selectedIssue.id] || SOP_DATA['offline'];
@@ -193,4 +193,45 @@
 
             $('#nav-help').on('click', () => window.open('https://forms.gle/x5BFYB2W9ZEifgmj7', '_blank'));
             $('#nav-help-bottom').on('click', () => window.open('https://forms.gle/x5BFYB2W9ZEifgmj7', '_blank'));
+        });
+
+
+function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            
+            // Logika untuk Mobile dan Desktop
+            if (window.innerWidth < 768) {
+                // Mobile: Gunakan translasi
+                sidebar.classList.toggle('-translate-x-full');
+                overlay.classList.toggle('active');
+            } else {
+                // Desktop: Sembunyikan sepenuhnya atau kecilkan
+                if (sidebar.style.width === '0px') {
+                    sidebar.style.width = '288px'; // 72 unit Tailwind
+                    sidebar.style.padding = '1.5rem';
+                    sidebar.style.opacity = '1';
+                } else {
+                    sidebar.style.width = '0px';
+                    sidebar.style.padding = '0';
+                    sidebar.style.opacity = '0';
+                    sidebar.style.overflow = 'hidden';
+                }
+            }
+        }
+
+        // Pastikan sidebar kembali normal jika layar di-resize
+        window.addEventListener('resize', () => {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            if (window.innerWidth >= 768) {
+                sidebar.classList.remove('-translate-x-full');
+                sidebar.style.width = '288px';
+                sidebar.style.opacity = '1';
+                sidebar.style.padding = '1.5rem';
+                overlay.classList.remove('active');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                sidebar.style.width = ''; // Reset inline style
+            }
         });
