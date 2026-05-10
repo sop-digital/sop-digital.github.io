@@ -19,7 +19,65 @@
     <!-- <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 md:hidden" onclick="toggleSidebar()"></div> -->
 
     <div class="flex min-h-screen  overflow-x-hidden">
-        
+
+        <!-- HIDDEN IFRAME FOR SILENT SUBMISSION -->
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) { console.log('Form submitted successfully'); }"></iframe>
+
+    <!-- INITIAL MODAL: TIKET LAPORAN -->
+    <div id="initial-modal" class="fixed inset-0 z-[100] flex items-center justify-center modal-overlay p-4">
+        <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-fade-in">
+            <div class="bg-[#0B0E14] p-6 text-white flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <i data-lucide="message-square" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <h3 class="font-bold">Lapor Kendala IT</h3>
+                </div>
+            </div>
+            
+            <!-- FORM TARGETING HIDDEN IFRAME -->
+            <form id="ticket-form" 
+                  action="https://docs.google.com/forms/d/e/1FAIpQLScRt5KnuajXUz7lW0MSBdaaOGIbHM2VSRX8-r2xF1jt79m7pQ/formResponse" 
+                  method="POST" 
+                  target="hidden_iframe" 
+                  onsubmit="submitted=true;"
+                  class="p-6 space-y-4">
+                
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Nama Pelapor</label>
+                    <input type="text" name="entry.1360964624" id="form-name" required placeholder="Nama Anda" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase mb-2">No. WhatsApp</label>
+                    <input type="tel" name="entry.2074128659" id="form-phone" required placeholder="08xxx" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                </div>
+                <!-- SEARCHABLE UNIT SELECTION -->
+                <div class="relative">
+                    <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Unit / Lokasi</label>
+                    <input type="text" id="unit-search" placeholder="Cari unit (Contoh: IGD, Poli...)" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                    <!-- Hidden actual input for Google Form -->
+                    <input type="hidden" name="entry.832262749" id="form-unit" required>
+                    
+                    <div id="unit-dropdown" class="absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-xl z-50 hidden max-h-48 overflow-y-auto custom-scrollbar">
+                        <!-- Options injected by JS -->
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Detail Kendala</label>
+                    <textarea name="entry.531938171" id="form-issue" required rows="2" placeholder="Masalah yang dialami..." class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all"></textarea>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" id="submit-btn" class="w-full py-4 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-700 shadow-lg shadow-blue-600/20 transition-all flex items-center justify-center gap-2">
+                        <span id="btn-text">Kirim & Lihat Solusi</span>
+                        <div id="btn-loader" class="loader hidden"></div>
+                        <i id="btn-icon" data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                    <p class="text-[10px] text-gray-400 text-center mt-4">Laporan terkirim otomatis ke Spreadsheet IT secara background.</p>
+                </div>
+            </form>
+        </div>
+    </div>
     <!-- Sidebar -->
         <aside id="sidebar" class="fixed md:relative z-30 w-72 h-full min-h-screen bg-[#0f172a] text-white flex flex-col p-6 -translate-x-full md:translate-x-0">
             <!-- Logo & Title -->

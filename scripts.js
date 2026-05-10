@@ -1,3 +1,17 @@
+// Used by iframe to track submission
+        var submitted = false;
+
+        const UNITS = [
+                    "IPSRS", "IGD", "RADIOLOGI", "LABORATORIUM", "PENDAFTARAN RAJAL LT 1", "PENDAFTARAN IGD", 
+                    "POLI PENYAKIT DALAM 1", "POLI PENYAKIT DALAM 2", "POLI PARU", "POLI BEDAH", "POLI MATA", 
+                    "KASIR", "DEPO FARMASI", "CASEMIX", "REKAM MEDIK", "NICU", "ICU", "IBS/OK", "GUDANG FARMASI", 
+                    "VK", "CSSI", "HEMODIALISA", "POLI OBGYN", "POLI BEDAH MULUT", "POLI GIGI", "POLI JIWA", 
+                    "POLI MCU", "POLI SARAF", "POLI ANAK", "GIZI", "REHAB MEDIK", "FISIOTERAPI", "RAWAT INAP LT 4", 
+                    "RAWAT INAP LT 5", "BIDANG PENUNJANG", "DIREKTUR & SEKRETARIS", "TATA USAHA", "BIDANG KEPERAWATAN", 
+                    "BIDANG PELAYANAN", "LAUNDRY", "PEMULASARAN JENAZAH", "IT", "MOD", "CLEANING SERVICE", 
+                    "RUANG EKG", "NURSE STATION LT 1", "NURSE STATION LT 3", "PENDAFTARAN RAJAL LT 3", "PENDAFTARAN RANAP"
+                ];
+
 // --- DATA ---
         const DEVICES = [
             { id: 'axioo-pro-l', name: 'PC AIO Axioo My PC One Pro L', cat: 'computer', trouble: false },
@@ -34,6 +48,7 @@
         let selectedDevice = null;
         let currentStep = 0;
         let searchQuery = '';
+        let currentIssueId = 'offline';
 
         // --- RENDER FUNCTIONS ---
         function renderIssues() {
@@ -157,8 +172,73 @@
 
         // --- EVENT HANDLERS ---
         $(document).ready(() => {
-            lucide.createIcons();
-            showView('home');
+           lucide.createIcons();
+
+           
+            // Searchable Unit logic
+            const $unitSearch = $('#unit-search');
+            const $unitDropdown = $('#unit-dropdown');
+            const $formUnit = $('#form-unit');
+
+            function filterUnits(query) {
+                const filtered = UNITS.filter(u => u.toLowerCase().includes(query.toLowerCase()));
+                $unitDropdown.empty();
+                if (filtered.length > 0) {
+                    filtered.forEach(u => {
+                        const $item = $(`<div class="px-4 py-2 hover:bg-blue-50 cursor-pointer text-sm">${u}</div>`);
+                        $item.on('click', () => {
+                            $unitSearch.val(u);
+                            $formUnit.val(u);
+                            $unitDropdown.addClass('hidden');
+                        });
+                        $unitDropdown.append($item);
+                    });
+                    $unitDropdown.removeClass('hidden');
+                } else {
+                    $unitDropdown.addClass('hidden');
+                }
+            }
+
+            $unitSearch.on('focus input', function() {
+                filterUnits($(this).val());
+            });
+
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('.relative').length) {
+                    $unitDropdown.addClass('hidden');
+                }
+            });
+
+
+        // Handle Silent Submission
+            $('#ticket-form').on('submit', function() {
+
+                if (!$formUnit.val()) {
+                    e.preventDefault();
+                    $unitSearch.addClass('ring-2 ring-red-500');
+                    return;
+                }
+
+                // Change button state to loading
+                $('#btn-text').text('Mengirim...');
+                $('#btn-loader').removeClass('hidden');
+                $('#btn-icon').addClass('hidden');
+                $('#submit-btn').prop('disabled', true);
+
+                // We wait 1.5 seconds to ensure the iframe has sent the request, then proceed
+                setTimeout(() => {
+                    $('#initial-modal').fadeOut(300);
+                    // Reset button for next time
+                    $('#btn-text').text('Kirim & Lihat Solusi');
+                    $('#btn-loader').addClass('hidden');
+                    $('#btn-icon').removeClass('hidden');
+                    $('#submit-btn').prop('disabled', false);
+                    
+                    // Show home view filtered by their issue
+                    $('#search-box').val($('#form-issue').val());
+                    showView('home');
+                }, 1500);
+            });
 
             $('#search-box').on('input', function() {
                 searchQuery = $(this).val();
